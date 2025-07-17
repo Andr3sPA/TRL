@@ -28,7 +28,7 @@ export default function RootLayout({
           {/* Header */}
           <header className="w-full">
             <Image 
-              src="https://res.cloudinary.com/dj9848zoy/image/upload/v1752721055/Header_xippn8.png"
+              src="https://res.cloudinary.com/djq1eimvs/image/upload/v1752781118/Header_aiikat.png"
               alt="Header"
               width={1920}
               height={200}
@@ -45,7 +45,7 @@ export default function RootLayout({
           {/* Footer */}
           <footer className="w-full mt-auto">
             <Image 
-              src="https://res.cloudinary.com/dj9848zoy/image/upload/v1752721049/Footer_yfdur6.png"
+              src="https://res.cloudinary.com/djq1eimvs/image/upload/v1752781118/Footer_ozqyba.png"
               alt="Footer"
               width={1920}
               height={150}
