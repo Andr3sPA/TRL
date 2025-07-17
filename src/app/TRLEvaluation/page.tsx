@@ -4,8 +4,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { TRLEvaluationWizard } from "@/components/TRLEvaluationWizard"
+import Link from "next/link"
 
-export function TRLEvaluationPage() {
+export default function TRLEvaluationPage() {
   const [showEvaluation, setShowEvaluation] = useState(false)
 
   if (showEvaluation) {
@@ -50,7 +51,16 @@ export function TRLEvaluationPage() {
               </p>
             </div>
 
-            <div className="flex justify-center pt-8">
+            <div className="flex justify-center gap-4 pt-8">
+              <Link href="/">
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="px-8 py-3 text-lg font-semibold"
+                >
+                  Volver al Inicio
+                </Button>
+              </Link>
               <Button 
                 onClick={() => setShowEvaluation(true)}
                 size="lg"
