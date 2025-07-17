@@ -146,12 +146,6 @@ export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues 
             
             {/* 🌐 Relación con el entorno */}
             <div className="space-y-6">
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold">🌐 Relación con el entorno</h3>
-                <p className="text-sm text-muted-foreground">
-                  Evalúe los aspectos relacionados con la interacción con el entorno
-                </p>
-              </div>
               
               {entornoCriterios.map((criterio) => (
                 <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">

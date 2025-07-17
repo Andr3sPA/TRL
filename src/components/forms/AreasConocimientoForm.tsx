@@ -185,12 +185,7 @@ export function AreasConocimientoForm({ onNext, onPrevious, defaultValues }: Are
             
             {/* 🧠 Áreas de Conocimiento */}
             <div className="space-y-6">
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold">🧠 Áreas de Conocimiento</h3>
-                <p className="text-sm text-muted-foreground">
-                  Evalúe los aspectos relacionados con las áreas de conocimiento
-                </p>
-              </div>
+ 
               
               {areasConocimientoCriterios.map((criterio) => (
                 <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">

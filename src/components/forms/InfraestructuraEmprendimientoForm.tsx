@@ -146,12 +146,6 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
             
             {/* 🏢 Infraestructura y recursos */}
             <div className="space-y-6">
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold">🏢 Infraestructura y Recursos</h3>
-                <p className="text-sm text-muted-foreground">
-                  Evalúe la disponibilidad y calidad de recursos para la estrategia CTI+e
-                </p>
-              </div>
               
               {infraestructuraCriterios.map((criterio) => (
                 <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">

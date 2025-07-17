@@ -146,12 +146,7 @@ export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }:
             
             {/* 👥 Formación */}
             <div className="space-y-6">
-              <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold">👥 Formación</h3>
-                <p className="text-sm text-muted-foreground">
-                  Evalúe los aspectos relacionados con la formación de estudiantes en la estrategia CTI+e
-                </p>
-              </div>
+
               
               {formacionCriterios.map((criterio) => (
                 <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">
