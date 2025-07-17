@@ -13,17 +13,17 @@ model Formulario {
   fechaEnvio           DateTime @default(now())
   
   // Información General
-  fullName             String
-  role                 String
-  email                String
-  phone                String
-  dedicationHours      Int
-  hasExperience        String
-  academicUnit         String
-  hasStrategy          String
-  strategyExplanation  String?
-  hasSocializedStrategy String
-  socializationExplanation String?
+  nombreCompleto       String
+  rol                  String
+  correoElectronico    String
+  telefono             String
+  horasDedicacion      Int
+  tieneExperiencia     String
+  unidadAcademica      String
+  tieneEstrategia      String
+  explicacionEstrategia String?
+  estrategiaSocializada String
+  explicacionSocializacion String?
   
   // Áreas de Conocimiento e Investigación y Desarrollo
   areasConocimiento1   String

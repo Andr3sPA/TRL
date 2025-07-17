@@ -88,17 +88,17 @@ export function TRLEvaluationWizard({ onGoBack }: { onGoBack?: () => void }) {
     // Mapear todos los datos del formulario al schema de la base de datos
     const formularioData = {
       // Información General
-      fullName: completeFormData.informacionGeneral?.fullName ?? "",
-      role: completeFormData.informacionGeneral?.role ?? "",
-      email: completeFormData.informacionGeneral?.email ?? "",
-      phone: completeFormData.informacionGeneral?.phone ?? "",
-      dedicationHours: completeFormData.informacionGeneral?.dedicationHours ?? 0,
-      hasExperience: completeFormData.informacionGeneral?.hasExperience ?? "",
-      academicUnit: completeFormData.informacionGeneral?.academicUnit ?? "",
-      hasStrategy: completeFormData.informacionGeneral?.hasStrategy ?? "",
-      strategyExplanation: completeFormData.informacionGeneral?.strategyExplanation ?? null,
-      hasSocializedStrategy: completeFormData.informacionGeneral?.hasSocializedStrategy ?? "",
-      socializationExplanation: completeFormData.informacionGeneral?.socializationExplanation ?? null,
+      nombreCompleto: completeFormData.informacionGeneral?.fullName ?? "",
+      rol: completeFormData.informacionGeneral?.role ?? "",
+      correoElectronico: completeFormData.informacionGeneral?.email ?? "",
+      telefono: completeFormData.informacionGeneral?.phone ?? "",
+      horasDedicacion: completeFormData.informacionGeneral?.dedicationHours ?? 0,
+      tieneExperiencia: completeFormData.informacionGeneral?.hasExperience ?? "",
+      unidadAcademica: completeFormData.informacionGeneral?.academicUnit ?? "",
+      tieneEstrategia: completeFormData.informacionGeneral?.hasStrategy ?? "",
+      explicacionEstrategia: completeFormData.informacionGeneral?.strategyExplanation ?? null,
+      estrategiaSocializada: completeFormData.informacionGeneral?.hasSocializedStrategy ?? "",
+      explicacionSocializacion: completeFormData.informacionGeneral?.socializationExplanation ?? null,
       
       // Áreas de Conocimiento e Investigación y Desarrollo
       areasConocimiento1: completeFormData.areasConocimiento?.areasConocimiento1 ?? "",

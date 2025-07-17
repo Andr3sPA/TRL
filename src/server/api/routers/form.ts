@@ -6,17 +6,17 @@ import {
 
 const formularioSchema = z.object({
   // Información General
-  fullName: z.string(),
-  role: z.string(),
-  email: z.string(),
-  phone: z.string(),
-  dedicationHours: z.number(),
-  hasExperience: z.string(),
-  academicUnit: z.string(),
-  hasStrategy: z.string(),
-  strategyExplanation: z.string().nullable(),
-  hasSocializedStrategy: z.string(),
-  socializationExplanation: z.string().nullable(),
+  nombreCompleto: z.string(),
+  rol: z.string(),
+  correoElectronico: z.string(),
+  telefono: z.string(),
+  horasDedicacion: z.number(),
+  tieneExperiencia: z.string(),
+  unidadAcademica: z.string(),
+  tieneEstrategia: z.string(),
+  explicacionEstrategia: z.string().nullable(),
+  estrategiaSocializada: z.string(),
+  explicacionSocializacion: z.string().nullable(),
   
   // Áreas de Conocimiento e Investigación y Desarrollo
   areasConocimiento1: z.string(),
