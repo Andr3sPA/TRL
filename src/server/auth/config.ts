@@ -4,7 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { db } from "@/server/db";
 import { createCaller } from "../api/root";
 import { createTRPCContext } from "../api/trpc";
-
+import type { Role } from "@prisma/client";
+import GoogleProvider from "next-auth/providers/google";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -15,15 +16,10 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      role: Role;
       // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
 /**
@@ -33,6 +29,10 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
+      GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
+  }),
       CredentialsProvider({
     // The name to display on the sign in form (e.g. 'Sign in with...')
     name: 'Credentials',
@@ -53,7 +53,7 @@ export const authConfig = {
       // (i.e., the request IP address)
       const ctx = await createTRPCContext({ headers: req?.headers});
       const caller = createCaller(ctx);
-
+      
       if (
         !credentials ||
         typeof credentials.email !== "string" ||
@@ -67,7 +67,6 @@ export const authConfig = {
           email: credentials.email,
           password: credentials.password,
         });
-
         // If no error and we have user data, return it
         if (user) {
           return user;
@@ -81,6 +80,7 @@ export const authConfig = {
       }
     }
   })
+  
     /**
      * ...add more providers here.
      *
@@ -99,11 +99,47 @@ export const authConfig = {
      strategy: "jwt",
    },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      // Si es login con Google, crear o actualizar el usuario
+      if (account?.provider === "google") {
+        try {
+          // Verificar si el usuario ya existe
+          const existingUser = await db.user.findUnique({
+            where: { email: user.email! }
+          });
+
+          if (!existingUser) {
+            // Crear nuevo usuario con rol USER por defecto
+            await db.user.create({
+              data: {
+                email: user.email!,
+                name: user.name,
+                image: user.image,
+                password: "", // Password vacío para usuarios de Google
+                role: "USER"
+              }
+            });
+          }
+          return true;
+        } catch (error) {
+          console.error("Error creating Google user:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+    jwt({ token, user }) {
+      if (user && 'role' in user) {
+        token.role = user.role;
+      }
+      return token;
+    },
     session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
         id: token.sub,
+        role: token.role as Role,
       },
     }),
   },

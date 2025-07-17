@@ -1,0 +1,5 @@
+export { InformacionGeneralForm } from './InformacionGeneralForm'
+export { AreasConocimientoForm } from './AreasConocimientoForm'
+export { TransferenciaInnovacionForm } from './TransferenciaInnovacionForm'
+export { ColaboracionFormacionForm } from './ColaboracionFormacionForm'
+export { InfraestructuraEmprendimientoForm } from './InfraestructuraEmprendimientoForm'

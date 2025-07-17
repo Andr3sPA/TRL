@@ -55,9 +55,16 @@ model User {
     emailVerified DateTime?
     password      String
     image         String?
+    role          Role      @default(USER)
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    forms         Form[]
+}
+// Enum para distinguir roles de usuario
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {
@@ -67,3 +74,13 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+model Form {
+  id             String   @id @default(cuid())
+  answers        Json     // Todas las respuestas del formulario TRL, agrupadas
+  createdAt      DateTime @default(now())
+
+  submittedBy    User?    @relation(fields: [submittedById], references: [id])
+  submittedById  String?
+
+}
+
