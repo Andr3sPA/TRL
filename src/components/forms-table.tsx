@@ -28,13 +28,18 @@ import * as React from "react";
 
 interface FormSubmission {
   id: string;
-  answers: any;
-  submittedById: string | null;
-  createdAt: Date;
+  fechaEnvio: Date;
+  nombreCompleto: string;
+  correoElectronico: string;
+  unidadAcademica: string;
+  rolUnidad: string;
+  telefono: string;
+  horasDedicacion: number;
+  tieneExperiencia: string;
 }
 
 export function FormsTable() {
-  const { data: forms = [], isLoading } = api.form.getForms.useQuery();
+  const { data: forms = [], isLoading } = api.form.obtenerFormularios.useQuery();
 
   const columns = React.useMemo<ColumnDef<FormSubmission>[]>(
     () => [
@@ -83,40 +88,85 @@ export function FormsTable() {
         enableColumnFilter: true,
       },
       {
-        id: "submittedBy",
-        accessorKey: "submittedById",
+        id: "nombreCompleto",
+        accessorKey: "nombreCompleto",
         header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
-          <DataTableColumnHeader column={column} title="Usuario" />
+          <DataTableColumnHeader column={column} title="Nombre Completo" />
         ),
-        cell: ({ cell }) => {
-          const userId = cell.getValue<string | null>();
-          
-          return (
-            <div className="flex items-center gap-2">
-              <User className="size-4" />
-              {userId ? (
-                <span className="font-mono text-sm">{userId.slice(0, 8)}...</span>
-              ) : (
-                <Badge variant="secondary">Anónimo</Badge>
-              )}
-            </div>
-          );
-        },
+        cell: ({ cell }) => (
+          <div className="font-medium">
+            {cell.getValue<string>()}
+          </div>
+        ),
         meta: {
-          label: "Usuario",
-          variant: "multiSelect",
-          options: [
-            { label: "Con usuario", value: "with-user", icon: User },
-            { label: "Anónimo", value: "anonymous", icon: User },
-          ],
+          label: "Nombre",
+          placeholder: "Buscar por nombre...",
+          variant: "text",
+          icon: User,
         },
         enableColumnFilter: true,
       },
       {
-        id: "createdAt",
-        accessorKey: "createdAt",
+        id: "correoElectronico",
+        accessorKey: "correoElectronico",
         header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
-          <DataTableColumnHeader column={column} title="Fecha de envío" />
+          <DataTableColumnHeader column={column} title="Correo Electrónico" />
+        ),
+        cell: ({ cell }) => (
+          <div className="text-sm">
+            {cell.getValue<string>()}
+          </div>
+        ),
+        meta: {
+          label: "Correo",
+          placeholder: "Buscar por correo...",
+          variant: "text",
+          icon: User,
+        },
+        enableColumnFilter: true,
+      },
+      {
+        id: "unidadAcademica",
+        accessorKey: "unidadAcademica",
+        header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
+          <DataTableColumnHeader column={column} title="Unidad Académica" />
+        ),
+        cell: ({ cell }) => (
+          <div className="text-sm">
+            {cell.getValue<string>()}
+          </div>
+        ),
+        enableColumnFilter: true,
+      },
+      {
+        id: "rolUnidad",
+        accessorKey: "rolUnidad",
+        header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
+          <DataTableColumnHeader column={column} title="Rol en la Unidad" />
+        ),
+        cell: ({ cell }) => (
+          <div className="text-sm">
+            {cell.getValue<string>()}
+          </div>
+        ),
+      },
+      {
+        id: "horasDedicacion",
+        accessorKey: "horasDedicacion",
+        header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
+          <DataTableColumnHeader column={column} title="Horas de Dedicación" />
+        ),
+        cell: ({ cell }) => (
+          <div className="text-sm">
+            {cell.getValue<number>()} horas
+          </div>
+        ),
+      },
+      {
+        id: "fechaEnvio",
+        accessorKey: "fechaEnvio",
+        header: ({ column }: { column: Column<FormSubmission, unknown> }) => (
+          <DataTableColumnHeader column={column} title="Fecha de Envío" />
         ),
         cell: ({ cell }) => {
           const date = cell.getValue<Date>();
@@ -131,21 +181,16 @@ export function FormsTable() {
         enableSorting: true,
       },
       {
-        id: "summary",
-        header: "Resumen",
-        cell: ({ row }) => {
-          const answers = row.original.answers;
-          const generalInfo = answers?.informacionGeneral;
+        id: "tieneExperiencia",
+        accessorKey: "tieneExperiencia",
+        header: "Experiencia CTI+e",
+        cell: ({ cell }) => {
+          const experiencia = cell.getValue<string>();
           
           return (
-            <div className="max-w-md">
-              <div className="text-sm font-medium">
-                {generalInfo?.fullName || "Sin nombre"}
-              </div>
-              <div className="text-xs text-gray-500">
-                {generalInfo?.academicUnit || "Sin unidad académica"}
-              </div>
-            </div>
+            <Badge variant={experiencia === "Sí" ? "default" : "secondary"}>
+              {experiencia}
+            </Badge>
           );
         },
       },
@@ -174,7 +219,7 @@ export function FormsTable() {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify(form.answers, null, 2));
+                    void navigator.clipboard.writeText(JSON.stringify(form, null, 2));
                     alert("Datos copiados al portapapeles");
                   }}
                 >
@@ -207,7 +252,7 @@ export function FormsTable() {
     columns,
     pageCount: 1,
     initialState: {
-      sorting: [{ id: "createdAt", desc: true }],
+      sorting: [{ id: "fechaEnvio", desc: true }],
       columnPinning: { right: ["actions"] },
     },
     getRowId: (row) => row.id,

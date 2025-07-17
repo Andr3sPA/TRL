@@ -70,7 +70,7 @@ interface InformacionGeneralFormProps {
 export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: InformacionGeneralFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       fullName: "",
       role: "",
       email: "",

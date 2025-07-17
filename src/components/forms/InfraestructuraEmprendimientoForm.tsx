@@ -73,7 +73,7 @@ interface InfraestructuraEmprendimientoFormProps {
 export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPrevious, defaultValues }: InfraestructuraEmprendimientoFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       infraestructura1: "",
       infraestructura2: "",
       infraestructura3: "",
@@ -94,22 +94,22 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
 
   const infraestructuraCriterios = [
     {
-      key: "infraestructura1",
+      key: "infraestructura1" as const,
       label: "Equipamiento especializado",
       description: "Disponibilidad y calidad de equipos científicos y tecnológicos especializados"
     },
     {
-      key: "infraestructura2",
+      key: "infraestructura2" as const,
       label: "Laboratorios y espacios de investigación",
       description: "Adecuación de instalaciones físicas para actividades de I+D+i"
     },
     {
-      key: "infraestructura3",
+      key: "infraestructura3" as const,
       label: "Recursos computacionales",
       description: "Capacidad de procesamiento, software especializado y recursos TIC"
     },
     {
-      key: "infraestructura4",
+      key: "infraestructura4" as const,
       label: "Mantenimiento y actualización",
       description: "Sostenibilidad y actualización continua de la infraestructura tecnológica"
     },
@@ -117,27 +117,27 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
 
   const emprendimientoCriterios = [
     {
-      key: "emprendimiento1",
+      key: "emprendimiento1" as const,
       label: "Identificación de oportunidades de negocio",
       description: "Capacidad para identificar y evaluar oportunidades comerciales a partir de la investigación"
     },
     {
-      key: "emprendimiento2",
+      key: "emprendimiento2" as const,
       label: "Desarrollo de planes de negocio",
       description: "Elaboración de modelos de negocio viables y sostenibles"
     },
     {
-      key: "emprendimiento3",
+      key: "emprendimiento3" as const,
       label: "Gestión de incubadoras/aceleradoras",
       description: "Participación en ecosistemas de emprendimiento e incubación"
     },
     {
-      key: "emprendimiento4",
+      key: "emprendimiento4" as const,
       label: "Captación de inversión",
       description: "Acceso a fuentes de financiación para proyectos emprendedores"
     },
     {
-      key: "emprendimiento5",
+      key: "emprendimiento5" as const,
       label: "Escalamiento empresarial",
       description: "Capacidad de crecimiento y expansión de iniciativas emprendedoras"
     },
@@ -162,12 +162,12 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />
@@ -223,12 +223,12 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />

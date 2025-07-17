@@ -73,7 +73,7 @@ interface AreasConocimientoFormProps {
 export function AreasConocimientoForm({ onNext, onPrevious, defaultValues }: AreasConocimientoFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       areasConocimiento1: "",
       areasConocimiento2: "",
       areasConocimiento3: "",
@@ -167,7 +167,7 @@ export function AreasConocimientoForm({ onNext, onPrevious, defaultValues }: Are
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />
@@ -228,7 +228,7 @@ export function AreasConocimientoForm({ onNext, onPrevious, defaultValues }: Are
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />

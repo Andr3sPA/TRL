@@ -73,7 +73,7 @@ interface TransferenciaInnovacionFormProps {
 export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues }: TransferenciaInnovacionFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       transferencia1: "",
       transferencia2: "",
       transferencia3: "",
@@ -94,22 +94,22 @@ export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues 
 
   const transferenciaCriterios = [
     {
-      key: "transferencia1",
+      key: "transferencia1" as const,
       label: "Identificación de oportunidades de transferencia",
       description: "Capacidad para identificar resultados de investigación transferibles"
     },
     {
-      key: "transferencia2",
+      key: "transferencia2" as const,
       label: "Protección de propiedad intelectual",
       description: "Gestión de patentes, derechos de autor y otros mecanismos de protección"
     },
     {
-      key: "transferencia3",
+      key: "transferencia3" as const,
       label: "Vinculación con el sector productivo",
       description: "Establecimiento de relaciones con empresas e industria"
     },
     {
-      key: "transferencia4",
+      key: "transferencia4" as const,
       label: "Comercialización de tecnologías",
       description: "Experiencia en procesos de licenciamiento y comercialización"
     },
@@ -117,27 +117,27 @@ export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues 
 
   const innovacionCriterios = [
     {
-      key: "innovacion1",
+      key: "innovacion1" as const,
       label: "Participación en proyectos de innovación",
       description: "Involucramiento activo en iniciativas de innovación"
     },
     {
-      key: "innovacion2",
+      key: "innovacion2" as const,
       label: "Desarrollo de prototipos",
       description: "Creación y validación de prototipos funcionales"
     },
     {
-      key: "innovacion3",
+      key: "innovacion3" as const,
       label: "Validación en entornos reales",
       description: "Pruebas y validación de tecnologías en condiciones operativas"
     },
     {
-      key: "innovacion4",
+      key: "innovacion4" as const,
       label: "Gestión de proyectos de innovación",
       description: "Capacidad de liderar y gestionar proyectos innovadores"
     },
     {
-      key: "innovacion5",
+      key: "innovacion5" as const,
       label: "Impacto de las innovaciones",
       description: "Medición y evaluación del impacto de las innovaciones desarrolladas"
     },
@@ -162,12 +162,12 @@ export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues 
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />
@@ -223,12 +223,12 @@ export function TransferenciaInnovacionForm({ onNext, onPrevious, defaultValues 
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />

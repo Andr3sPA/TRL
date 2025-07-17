@@ -88,7 +88,7 @@ interface ColaboracionFormacionFormProps {
 export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }: ColaboracionFormacionFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: defaultValues ?? {
       colaboracion1: "",
       colaboracion2: "",
       colaboracion3: "",
@@ -114,37 +114,37 @@ export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }:
 
   const colaboracionCriterios = [
     {
-      key: "colaboracion1",
+      key: "colaboracion1" as const,
       label: "Convenios con empresas",
       description: "Establecimiento y gestión de acuerdos de colaboración con el sector empresarial"
     },
     {
-      key: "colaboracion2",
+      key: "colaboracion2" as const,
       label: "Proyectos conjuntos I+D+i",
       description: "Participación en proyectos colaborativos de investigación, desarrollo e innovación"
     },
     {
-      key: "colaboracion3",
+      key: "colaboracion3" as const,
       label: "Redes de investigación",
       description: "Participación activa en redes nacionales e internacionales de investigación"
     },
     {
-      key: "colaboracion4",
+      key: "colaboracion4" as const,
       label: "Consultoría especializada",
       description: "Prestación de servicios de consultoría técnica y científica"
     },
     {
-      key: "colaboracion5",
+      key: "colaboracion5" as const,
       label: "Participación en clusters",
       description: "Involucramiento en clusters industriales y tecnológicos"
     },
     {
-      key: "colaboracion6",
+      key: "colaboracion6" as const,
       label: "Cooperación internacional",
       description: "Colaboración con instituciones y organizaciones internacionales"
     },
     {
-      key: "colaboracion7",
+      key: "colaboracion7" as const,
       label: "Spin-offs y start-ups",
       description: "Creación o participación en empresas derivadas de la investigación"
     },
@@ -152,37 +152,37 @@ export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }:
 
   const formacionCriterios = [
     {
-      key: "formacion1",
+      key: "formacion1" as const,
       label: "Dirección de tesis de posgrado",
       description: "Supervisión de estudiantes de maestría y doctorado"
     },
     {
-      key: "formacion2",
+      key: "formacion2" as const,
       label: "Formación de investigadores junior",
       description: "Mentoring y desarrollo de nuevos investigadores"
     },
     {
-      key: "formacion3",
+      key: "formacion3" as const,
       label: "Programas de intercambio",
       description: "Participación en programas de movilidad estudiantil y académica"
     },
     {
-      key: "formacion4",
+      key: "formacion4" as const,
       label: "Capacitación continua",
       description: "Desarrollo de programas de educación continua y actualización profesional"
     },
     {
-      key: "formacion5",
+      key: "formacion5" as const,
       label: "Transferencia de conocimiento",
       description: "Actividades de divulgación científica y transferencia de conocimiento"
     },
     {
-      key: "formacion6",
+      key: "formacion6" as const,
       label: "Desarrollo de competencias técnicas",
       description: "Formación especializada en habilidades técnicas específicas"
     },
     {
-      key: "formacion7",
+      key: "formacion7" as const,
       label: "Vinculación con egresados",
       description: "Mantenimiento de redes y colaboración con antiguos estudiantes"
     },
@@ -207,12 +207,12 @@ export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }:
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />
@@ -268,12 +268,12 @@ export function ColaboracionFormacionForm({ onNext, onPrevious, defaultValues }:
                 <FormField
                   key={criterio.key}
                   control={form.control}
-                  name={criterio.key as keyof z.infer<typeof formSchema>}
+                  name={criterio.key}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>{criterio.label}</FormLabel>
                       <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value as string}>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Seleccione calificación (0-5)" />

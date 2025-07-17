@@ -9,7 +9,6 @@ import {
   ColaboracionFormacionForm,
   InfraestructuraEmprendimientoForm,
 } from "./forms"
-import { Button } from "./ui/button"
 import { api } from "@/trpc/react"
 
 // Definir los tipos de datos para cada formulario
@@ -32,7 +31,7 @@ export function TRLEvaluationWizard({ onGoBack }: { onGoBack?: () => void }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({})
   
-  const submitFormMutation = api.form.submitForm.useMutation({
+  const submitFormMutation = api.form.enviarFormulario.useMutation({
     onSuccess: () => {
       alert("¡Evaluación TRL enviada exitosamente!")
       router.push("/")
@@ -86,11 +85,52 @@ export function TRLEvaluationWizard({ onGoBack }: { onGoBack?: () => void }) {
     
     setFormData((prev) => ({ ...prev, infraestructuraEmprendimiento: data }))
     
+    // Mapear todos los datos del formulario al schema de la base de datos
+    const formularioData = {
+      // Información General
+      nombreCompleto: completeFormData.informacionGeneral?.fullName ?? "",
+      rolUnidad: completeFormData.informacionGeneral?.role ?? "",
+      correoElectronico: completeFormData.informacionGeneral?.email ?? "",
+      telefono: completeFormData.informacionGeneral?.phone ?? "",
+      horasDedicacion: completeFormData.informacionGeneral?.dedicationHours ?? 0,
+      tieneExperiencia: completeFormData.informacionGeneral?.hasExperience ?? "",
+      unidadAcademica: completeFormData.informacionGeneral?.academicUnit ?? "",
+      estrategia: completeFormData.informacionGeneral?.strategy ?? "",
+      nivelSocializacion: completeFormData.informacionGeneral?.strategySharing ?? "",
+      explicacionSocializacion: completeFormData.informacionGeneral?.strategySharingExplanation ?? "",
+      
+      // Áreas de Conocimiento (necesitas ajustar estos campos según tu formulario)
+      areasInvestigacion: JSON.stringify(completeFormData.areasConocimiento ?? {}),
+      proyectoActual: "",
+      descripcionProyecto: "",
+      tecnologiasUtilizadas: "",
+      resultadosEsperados: "",
+      
+      // Transferencia e Innovación
+      experienciaTransferencia: JSON.stringify(completeFormData.transferenciaInnovacion ?? {}),
+      tipoTransferencia: "",
+      participacionInnovacion: "",
+      colaboracionEmpresa: "",
+      impactoComercial: "",
+      
+      // Colaboración y Formación
+      redesColaboracion: JSON.stringify(completeFormData.colaboracionFormacion ?? {}),
+      proyectosConjuntos: "",
+      intercambioConocimiento: "",
+      programasFormacion: "",
+      mentoriaEstudiantes: "",
+      
+      // Infraestructura y Emprendimiento
+      infraestructura: JSON.stringify(completeFormData.infraestructuraEmprendimiento ?? {}),
+      laboratoriosEquipos: "",
+      apoyoEmprendimiento: "",
+      startupsSpin: "",
+      capacitacionEmprendimiento: "",
+    }
+    
     // Enviar los datos a través de TRPC
     try {
-      await submitFormMutation.mutateAsync({
-        answers: completeFormData
-      })
+      await submitFormMutation.mutateAsync(formularioData)
     } catch (error) {
       console.error("Error al enviar la evaluación:", error)
     }

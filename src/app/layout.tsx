@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "@/components/ui/sonner";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Evaluación TRC",
@@ -26,10 +27,13 @@ export default function RootLayout({
         <NuqsAdapter>
           {/* Header */}
           <header className="w-full">
-            <img 
+            <Image 
               src="https://res.cloudinary.com/dj9848zoy/image/upload/v1752721055/Header_xippn8.png"
               alt="Header"
+              width={1920}
+              height={200}
               className="w-full h-auto object-cover"
+              priority
             />
           </header>
 
@@ -40,11 +44,11 @@ export default function RootLayout({
 
           {/* Footer */}
           <footer className="w-full mt-auto">
-            <img 
+            <Image 
               src="https://res.cloudinary.com/dj9848zoy/image/upload/v1752721049/Footer_yfdur6.png"
               alt="Footer"
-              width="1920"
-              height="150"
+              width={1920}
+              height={150}
               className="w-full h-auto object-cover"
             />
           </footer>

@@ -8,79 +8,50 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Formulario {
+  id                    String   @id @default(cuid())
+  fechaEnvio           DateTime @default(now())
+  
+  // Información General
+  nombreCompleto       String
+  rolUnidad           String
+  correoElectronico   String
+  telefono            String
+  horasDedicacion     Int
+  tieneExperiencia    String
+  unidadAcademica     String
+  estrategia          String
+  nivelSocializacion  String
+  explicacionSocializacion String
+  
+  // Áreas de Conocimiento
+  areasInvestigacion  String
+  proyectoActual      String
+  descripcionProyecto String
+  tecnologiasUtilizadas String
+  resultadosEsperados String
+  
+  // Transferencia e Innovación
+  experienciaTransferencia String
+  tipoTransferencia   String
+  participacionInnovacion String
+  colaboracionEmpresa String
+  impactoComercial    String
+  
+  // Colaboración y Formación
+  redesColaboracion   String
+  proyectosConjuntos  String
+  intercambioConocimiento String
+  programasFormacion  String
+  mentoriaEstudiantes String
+  
+  // Infraestructura y Emprendimiento
+  infraestructura     String
+  laboratoriosEquipos String
+  apoyoEmprendimiento String
+  startupsSpin        String
+  capacitacionEmprendimiento String
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
-// Necessary for Next auth
-model Account {
-    id                       String  @id @default(cuid())
-    userId                   String
-    type                     String
-    provider                 String
-    providerAccountId        String
-    refresh_token            String? // @db.Text
-    access_token             String? // @db.Text
-    expires_at               Int?
-    token_type               String?
-    scope                    String?
-    id_token                 String? // @db.Text
-    session_state            String?
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    refresh_token_expires_in Int?
-
-    @@unique([provider, providerAccountId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String   @unique
-    emailVerified DateTime?
-    password      String
-    image         String?
-    role          Role      @default(USER)
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
-    forms         Form[]
-}
-// Enum para distinguir roles de usuario
-enum Role {
-  USER
-  ADMIN
-}
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
-}
-model Form {
-  id             String   @id @default(cuid())
-  answers        Json     // Todas las respuestas del formulario TRL, agrupadas
-  createdAt      DateTime @default(now())
-
-  submittedBy    User?    @relation(fields: [submittedById], references: [id])
-  submittedById  String?
-
+  @@map("formularios")
 }
 
