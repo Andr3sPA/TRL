@@ -26,40 +26,43 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const ratingOptions = ["0", "1", "2", "3", "4", "5"]
 
 const formSchema = z.object({
-  // Infraestructura tecnológica (4 criterios)
+  // Infraestructura y recursos (4 criterios)
   infraestructura1: z.string({
     required_error: "Calificación requerida",
+  }),
+  infraestructura1Observacion: z.string().min(10, {
+    message: "La observación debe tener al menos 10 caracteres.",
   }),
   infraestructura2: z.string({
     required_error: "Calificación requerida",
   }),
+  infraestructura2Observacion: z.string().min(10, {
+    message: "La observación debe tener al menos 10 caracteres.",
+  }),
   infraestructura3: z.string({
     required_error: "Calificación requerida",
+  }),
+  infraestructura3Observacion: z.string().min(10, {
+    message: "La observación debe tener al menos 10 caracteres.",
   }),
   infraestructura4: z.string({
     required_error: "Calificación requerida",
   }),
-  infraestructuraObservacion: z.string().min(10, {
+  infraestructura4Observacion: z.string().min(10, {
     message: "La observación debe tener al menos 10 caracteres.",
   }),
   
-  // Gestión del emprendimiento (5 criterios)
+  // Emprendimiento (2 criterios)
   emprendimiento1: z.string({
     required_error: "Calificación requerida",
+  }),
+  emprendimiento1Observacion: z.string().min(10, {
+    message: "La observación debe tener al menos 10 caracteres.",
   }),
   emprendimiento2: z.string({
     required_error: "Calificación requerida",
   }),
-  emprendimiento3: z.string({
-    required_error: "Calificación requerida",
-  }),
-  emprendimiento4: z.string({
-    required_error: "Calificación requerida",
-  }),
-  emprendimiento5: z.string({
-    required_error: "Calificación requerida",
-  }),
-  emprendimientoObservacion: z.string().min(10, {
+  emprendimiento2Observacion: z.string().min(10, {
     message: "La observación debe tener al menos 10 caracteres.",
   }),
 })
@@ -75,16 +78,17 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues ?? {
       infraestructura1: "",
+      infraestructura1Observacion: "",
       infraestructura2: "",
+      infraestructura2Observacion: "",
       infraestructura3: "",
+      infraestructura3Observacion: "",
       infraestructura4: "",
-      infraestructuraObservacion: "",
+      infraestructura4Observacion: "",
       emprendimiento1: "",
+      emprendimiento1Observacion: "",
       emprendimiento2: "",
-      emprendimiento3: "",
-      emprendimiento4: "",
-      emprendimiento5: "",
-      emprendimientoObservacion: "",
+      emprendimiento2Observacion: "",
     },
   })
 
@@ -95,180 +99,173 @@ export function InfraestructuraEmprendimientoForm({ onSubmit: onSubmitProp, onPr
   const infraestructuraCriterios = [
     {
       key: "infraestructura1" as const,
-      label: "Equipamiento especializado",
-      description: "Disponibilidad y calidad de equipos científicos y tecnológicos especializados"
+      label: "¿La unidad académica cuenta con infraestructura adecuada para la estrategia CTI+e?",
+      description: "Evalúe la calidad y adecuación de instalaciones, equipos y recursos físicos"
     },
     {
       key: "infraestructura2" as const,
-      label: "Laboratorios y espacios de investigación",
-      description: "Adecuación de instalaciones físicas para actividades de I+D+i"
+      label: "¿Existen recursos financieros suficientes para su desarrollo?",
+      description: "Evalúe la disponibilidad y suficiencia de recursos económicos para la estrategia"
     },
     {
       key: "infraestructura3" as const,
-      label: "Recursos computacionales",
-      description: "Capacidad de procesamiento, software especializado y recursos TIC"
+      label: "¿Se cuenta con recursos humanos especializados?",
+      description: "Evalúe la disponibilidad de personal calificado y especializado"
     },
     {
       key: "infraestructura4" as const,
-      label: "Mantenimiento y actualización",
-      description: "Sostenibilidad y actualización continua de la infraestructura tecnológica"
+      label: "¿Existe apoyo institucional para sostenibilidad de la estrategia?",
+      description: "Evalúe el compromiso y respaldo institucional a largo plazo"
     },
   ]
 
   const emprendimientoCriterios = [
     {
       key: "emprendimiento1" as const,
-      label: "Identificación de oportunidades de negocio",
-      description: "Capacidad para identificar y evaluar oportunidades comerciales a partir de la investigación"
+      label: "¿Se promueve el emprendimiento derivado de procesos CTI+e?",
+      description: "Evalúe las iniciativas de fomento al emprendimiento basado en CTI+e"
     },
     {
       key: "emprendimiento2" as const,
-      label: "Desarrollo de planes de negocio",
-      description: "Elaboración de modelos de negocio viables y sostenibles"
-    },
-    {
-      key: "emprendimiento3" as const,
-      label: "Gestión de incubadoras/aceleradoras",
-      description: "Participación en ecosistemas de emprendimiento e incubación"
-    },
-    {
-      key: "emprendimiento4" as const,
-      label: "Captación de inversión",
-      description: "Acceso a fuentes de financiación para proyectos emprendedores"
-    },
-    {
-      key: "emprendimiento5" as const,
-      label: "Escalamiento empresarial",
-      description: "Capacidad de crecimiento y expansión de iniciativas emprendedoras"
+      label: "¿Existen programas, centros o actividades que apoyen el emprendimiento?",
+      description: "Evalúe la existencia de estructuras de apoyo al emprendimiento"
     },
   ]
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
-        <CardTitle>Infraestructura y Emprendimiento</CardTitle>
+        <CardTitle>Infraestructura, Recursos y Emprendimiento</CardTitle>
         <CardDescription>
-          Evalúe los criterios relacionados con infraestructura tecnológica y gestión del emprendimiento (Escala 0-5)
+          Evalúe los criterios relacionados con infraestructura, recursos y emprendimiento en la estrategia CTI+e (Escala 0-5)
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             
-            {/* Infraestructura tecnológica */}
-            <div className="space-y-6">
-              
-              {infraestructuraCriterios.map((criterio) => (
-                <FormField
-                  key={criterio.key}
-                  control={form.control}
-                  name={criterio.key}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{criterio.label}</FormLabel>
-                      <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Seleccione calificación (0-5)" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {ratingOptions.map((rating) => (
-                            <SelectItem key={rating} value={rating}>
-                              {rating} - {rating === "0" ? "No aplica/Sin evidencia" : 
-                                       rating === "1" ? "Muy bajo" :
-                                       rating === "2" ? "Bajo" :
-                                       rating === "3" ? "Medio" :
-                                       rating === "4" ? "Alto" : "Muy alto"}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ))}
-
-              <FormField
-                control={form.control}
-                name="infraestructuraObservacion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Observaciones - Infraestructura Tecnológica</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Proporcione observaciones generales sobre la infraestructura tecnológica"
-                        className="min-h-[100px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* Gestión del emprendimiento */}
+            {/* 🏢 Infraestructura y recursos */}
             <div className="space-y-6">
               <div className="border-b pb-4">
-                <h3 className="text-lg font-semibold">Gestión del Emprendimiento</h3>
+                <h3 className="text-lg font-semibold">🏢 Infraestructura y Recursos</h3>
                 <p className="text-sm text-muted-foreground">
-                  Evalúe las capacidades relacionadas con la gestión del emprendimiento
+                  Evalúe la disponibilidad y calidad de recursos para la estrategia CTI+e
+                </p>
+              </div>
+              
+              {infraestructuraCriterios.map((criterio) => (
+                <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                  <FormField
+                    control={form.control}
+                    name={criterio.key}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">{criterio.label}</FormLabel>
+                        <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleccione calificación (0-5)" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {ratingOptions.map((rating) => (
+                              <SelectItem key={rating} value={rating}>
+                                {rating} - {rating === "0" ? "No aplica/Sin evidencia" : 
+                                         rating === "1" ? "Muy bajo" :
+                                         rating === "2" ? "Bajo" :
+                                         rating === "3" ? "Medio" :
+                                         rating === "4" ? "Alto" : "Muy alto"}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name={`${criterio.key}Observacion` as keyof z.infer<typeof formSchema>}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observación</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Proporcione observaciones específicas sobre este criterio"
+                            className="min-h-[80px]"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* 🚀 Emprendimiento */}
+            <div className="space-y-6">
+              <div className="border-b pb-4">
+                <h3 className="text-lg font-semibold">🚀 Emprendimiento</h3>
+                <p className="text-sm text-muted-foreground">
+                  Evalúe las actividades y programas de emprendimiento
                 </p>
               </div>
               
               {emprendimientoCriterios.map((criterio) => (
-                <FormField
-                  key={criterio.key}
-                  control={form.control}
-                  name={criterio.key}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>{criterio.label}</FormLabel>
-                      <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Seleccione calificación (0-5)" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {ratingOptions.map((rating) => (
-                            <SelectItem key={rating} value={rating}>
-                              {rating} - {rating === "0" ? "No aplica/Sin evidencia" : 
-                                       rating === "1" ? "Muy bajo" :
-                                       rating === "2" ? "Bajo" :
-                                       rating === "3" ? "Medio" :
-                                       rating === "4" ? "Alto" : "Muy alto"}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ))}
+                <div key={criterio.key} className="space-y-4 p-4 border rounded-lg bg-muted/20">
+                  <FormField
+                    control={form.control}
+                    name={criterio.key}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-medium">{criterio.label}</FormLabel>
+                        <p className="text-sm text-muted-foreground mb-2">{criterio.description}</p>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleccione calificación (0-5)" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {ratingOptions.map((rating) => (
+                              <SelectItem key={rating} value={rating}>
+                                {rating} - {rating === "0" ? "No aplica/Sin evidencia" : 
+                                         rating === "1" ? "Muy bajo" :
+                                         rating === "2" ? "Bajo" :
+                                         rating === "3" ? "Medio" :
+                                         rating === "4" ? "Alto" : "Muy alto"}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-              <FormField
-                control={form.control}
-                name="emprendimientoObservacion"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Observaciones - Gestión del Emprendimiento</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Proporcione observaciones generales sobre la gestión del emprendimiento"
-                        className="min-h-[100px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormField
+                    control={form.control}
+                    name={`${criterio.key}Observacion` as keyof z.infer<typeof formSchema>}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Observación</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Proporcione observaciones específicas sobre este criterio"
+                            className="min-h-[80px]"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
             </div>
 
             <div className="flex justify-between">

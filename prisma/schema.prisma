@@ -13,44 +13,79 @@ model Formulario {
   fechaEnvio           DateTime @default(now())
   
   // Información General
-  nombreCompleto       String
-  rolUnidad           String
-  correoElectronico   String
-  telefono            String
-  horasDedicacion     Int
-  tieneExperiencia    String
-  unidadAcademica     String
-  estrategia          String
-  nivelSocializacion  String
-  explicacionSocializacion String
+  fullName             String
+  role                 String
+  email                String
+  phone                String
+  dedicationHours      Int
+  hasExperience        String
+  academicUnit         String
+  hasStrategy          String
+  strategyExplanation  String?
+  hasSocializedStrategy String
+  socializationExplanation String?
   
-  // Áreas de Conocimiento
-  areasInvestigacion  String
-  proyectoActual      String
-  descripcionProyecto String
-  tecnologiasUtilizadas String
-  resultadosEsperados String
+  // Áreas de Conocimiento e Investigación y Desarrollo
+  areasConocimiento1   String
+  areasConocimiento1Observacion String
+  areasConocimiento2   String
+  areasConocimiento2Observacion String
+  areasConocimiento3   String
+  areasConocimiento3Observacion String
+  areasConocimiento4   String
+  areasConocimiento4Observacion String
+  investigacion1       String
+  investigacion1Observacion String
+  investigacion2       String
+  investigacion2Observacion String
+  investigacion3       String
+  investigacion3Observacion String
+  investigacion4       String
+  investigacion4Observacion String
+  investigacion5       String
+  investigacion5Observacion String
   
-  // Transferencia e Innovación
-  experienciaTransferencia String
-  tipoTransferencia   String
-  participacionInnovacion String
-  colaboracionEmpresa String
-  impactoComercial    String
+  // Transferencia, innovación y relación con el entorno
+  entorno1             String
+  entorno1Observacion  String
+  entorno2             String
+  entorno2Observacion  String
+  entorno3             String
+  entorno3Observacion  String
+  transferencia1       String
+  transferencia1Observacion String
+  transferencia2       String
+  transferencia2Observacion String
+  transferencia3       String
+  transferencia3Observacion String
   
   // Colaboración y Formación
-  redesColaboracion   String
-  proyectosConjuntos  String
-  intercambioConocimiento String
-  programasFormacion  String
-  mentoriaEstudiantes String
+  formacion1           String
+  formacion1Observacion String
+  formacion2           String
+  formacion2Observacion String
+  formacion3           String
+  formacion3Observacion String
+  colaboracion1        String
+  colaboracion1Observacion String
+  colaboracion2        String
+  colaboracion2Observacion String
+  colaboracion3        String
+  colaboracion3Observacion String
   
-  // Infraestructura y Emprendimiento
-  infraestructura     String
-  laboratoriosEquipos String
-  apoyoEmprendimiento String
-  startupsSpin        String
-  capacitacionEmprendimiento String
+  // Infraestructura, recursos y emprendimiento
+  infraestructura1     String
+  infraestructura1Observacion String
+  infraestructura2     String
+  infraestructura2Observacion String
+  infraestructura3     String
+  infraestructura3Observacion String
+  infraestructura4     String
+  infraestructura4Observacion String
+  emprendimiento1      String
+  emprendimiento1Observacion String
+  emprendimiento2      String
+  emprendimiento2Observacion String
 
   @@map("formularios")
 }

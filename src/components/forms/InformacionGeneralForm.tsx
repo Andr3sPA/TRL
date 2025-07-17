@@ -30,16 +30,16 @@ const formSchema = z.object({
     message: "El nombre completo debe tener al menos 2 caracteres.",
   }),
   role: z.string().min(2, {
-    message: "El rol en la unidad es obligatorio.",
+    message: "El rol en la unidad académica es obligatorio.",
   }),
   email: z.string().email({
     message: "Ingrese un correo electrónico válido.",
   }),
   phone: z.string().min(10, {
-    message: "El número de teléfono debe tener al menos 10 dígitos.",
+    message: "El número de celular debe tener al menos 10 dígitos.",
   }),
-  dedicationHours: z.coerce.number().min(1).max(168, {
-    message: "Las horas de dedicación deben estar entre 1 y 168.",
+  dedicationHours: z.coerce.number().min(1, {
+    message: "El tiempo de dedicación debe ser mayor a 0 horas.",
   }),
   hasExperience: z.string({
     required_error: "Seleccione si tiene experiencia en CTI+e.",
@@ -47,19 +47,31 @@ const formSchema = z.object({
   academicUnit: z.string({
     required_error: "Seleccione una unidad académica.",
   }),
-  strategy: z.string({
-    required_error: "Seleccione una estrategia CTI+e.",
+  hasStrategy: z.string({
+    required_error: "Seleccione si cuenta con una estrategia institucional para CTI+e.",
   }),
-  strategyExplanation: z.string().min(10, {
-    message: "La explicación debe tener al menos 10 caracteres.",
+  strategyExplanation: z.string().optional(),
+  hasSocializedStrategy: z.string({
+    required_error: "Seleccione si ha socializado la estrategia en su unidad académica.",
   }),
-  strategySharing: z.string({
-    required_error: "Seleccione el nivel de socialización.",
-  }),
-  strategySharingExplanation: z.string().min(10, {
-    message: "La explicación debe tener al menos 10 caracteres.",
-  }),
-})
+  socializationExplanation: z.string().optional(),
+}).refine((data) => {
+  if (data.hasStrategy === "si" && (!data.strategyExplanation || data.strategyExplanation.length < 10)) {
+    return false;
+  }
+  return true;
+}, {
+  message: "La explicación de la estrategia debe tener al menos 10 caracteres.",
+  path: ["strategyExplanation"],
+}).refine((data) => {
+  if (data.hasSocializedStrategy === "si" && (!data.socializationExplanation || data.socializationExplanation.length < 10)) {
+    return false;
+  }
+  return true;
+}, {
+  message: "La explicación de la socialización debe tener al menos 10 caracteres.",
+  path: ["socializationExplanation"],
+});
 
 interface InformacionGeneralFormProps {
   onNext: (data: z.infer<typeof formSchema>) => void
@@ -75,44 +87,47 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
       role: "",
       email: "",
       phone: "",
-      dedicationHours: 40,
+      dedicationHours: 1,
       hasExperience: "",
       academicUnit: "",
-      strategy: "",
+      hasStrategy: "",
       strategyExplanation: "",
-      strategySharing: "",
-      strategySharingExplanation: "",
+      hasSocializedStrategy: "",
+      socializationExplanation: "",
     },
   })
+
+  const hasStrategy = form.watch("hasStrategy");
+  const hasSocializedStrategy = form.watch("hasSocializedStrategy");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     onNext(values)
   }
 
   const academicUnits = [
-    "Facultad de Ingeniería",
-    "Facultad de Ciencias",
-    "Facultad de Medicina",
-    "Facultad de Administración",
+    "Corporación Académica Ambiental",
+    "Escuela de Idiomas",
+    "Escuela de Microbiología",
+    "Escuela de Nutrición y Dietética",
+    "Escuela Interameriacana de Bibliotecologia",
+    "Facultad de Artes",
+    "Facultad de Ciencias Agrarias",
+    "Facultad de Ciencias Económicas",
+    "Facultad de Ciencias Exactas y Naturales",
+    "Facultad de Ciencias Farmacéuticas y Alimentarias",
+    "Facultad de Ciencias Sociales y Humanas",
+    "Facultad de Comunicaciones",
+    "Facultad de Derecho y Ciencias Políticas",
     "Facultad de Educación",
-    "Instituto de Investigación",
-    "Centro de Innovación",
-  ]
-
-  const strategies = [
-    "Investigación Básica",
-    "Investigación Aplicada",
-    "Desarrollo Tecnológico",
-    "Innovación",
-    "Transferencia de Tecnología",
-  ]
-
-  const sharingLevels = [
-    "Muy Alto",
-    "Alto",
-    "Medio",
-    "Bajo",
-    "Muy Bajo",
+    "Facultad de Enfermería",
+    "Facultad de Ingeniería",
+    "Facultad de Medicina",
+    "Facultad de Odontología",
+    "Facultad Nacional de Salud Pública",
+    "Instituto de Educación Fisica y Deporte",
+    "Instituto de Estudios Políticos",
+    "Instituto de Estudios Regionales",
+    "Instituto de Filosofía",
   ]
 
   return (
@@ -146,7 +161,7 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Rol en la unidad *</FormLabel>
+                    <FormLabel>Rol en la unidad académica *</FormLabel>
                     <FormControl>
                       <Input placeholder="Ej: Investigador, Docente, Director" {...field} />
                     </FormControl>
@@ -162,7 +177,7 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                   <FormItem>
                     <FormLabel>Correo electrónico *</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="ejemplo@universidad.edu.co" {...field} />
+                      <Input type="email" placeholder="ejemplo@udea.edu.co" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,7 +189,7 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Celular *</FormLabel>
+                    <FormLabel>Número de celular *</FormLabel>
                     <FormControl>
                       <Input placeholder="3001234567" {...field} />
                     </FormControl>
@@ -188,12 +203,12 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 name="dedicationHours"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tiempo de dedicación (horas/semana) *</FormLabel>
+                    <FormLabel>Tiempo de dedicación a la estrategia CTI+e (horas) *</FormLabel>
                     <FormControl>
-                      <Input type="number" min="1" max="168" {...field} />
+                      <Input type="number" min="1" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Número de horas semanales dedicadas a actividades CTI+e
+                      Número de horas dedicadas a actividades CTI+e
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -227,7 +242,7 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 name="academicUnit"
                 render={({ field }) => (
                   <FormItem className="md:col-span-2">
-                    <FormLabel>Unidad Académica *</FormLabel>
+                    <FormLabel>Unidad académica *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -249,22 +264,19 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
 
               <FormField
                 control={form.control}
-                name="strategy"
+                name="hasStrategy"
                 render={({ field }) => (
                   <FormItem className="md:col-span-2">
-                    <FormLabel>Estrategia CTI+e *</FormLabel>
+                    <FormLabel>¿Cuenta con una estrategia institucional para CTI+e? *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccione la estrategia principal" />
+                          <SelectValue placeholder="Seleccione una opción" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {strategies.map((strategy) => (
-                          <SelectItem key={strategy} value={strategy}>
-                            {strategy}
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="si">Sí</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -272,42 +284,41 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="strategyExplanation"
-                render={({ field }) => (
-                  <FormItem className="md:col-span-2">
-                    <FormLabel>Explicación de la estrategia *</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Explique en detalle la estrategia CTI+e seleccionada"
-                        className="min-h-[100px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {hasStrategy === "si" && (
+                <FormField
+                  control={form.control}
+                  name="strategyExplanation"
+                  render={({ field }) => (
+                    <FormItem className="md:col-span-2">
+                      <FormLabel>Explique brevemente la estrategia *</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Describa la estrategia institucional para CTI+e"
+                          className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
               <FormField
                 control={form.control}
-                name="strategySharing"
+                name="hasSocializedStrategy"
                 render={({ field }) => (
                   <FormItem className="md:col-span-2">
-                    <FormLabel>Nivel de socialización de la estrategia *</FormLabel>
+                    <FormLabel>¿Ha socializado la estrategia en su unidad académica? *</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccione el nivel de socialización" />
+                          <SelectValue placeholder="Seleccione una opción" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {sharingLevels.map((level) => (
-                          <SelectItem key={level} value={level}>
-                            {level}
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="si">Sí</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -315,23 +326,25 @@ export function InformacionGeneralForm({ onNext, defaultValues, onGoBack }: Info
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="strategySharingExplanation"
-                render={({ field }) => (
-                  <FormItem className="md:col-span-2">
-                    <FormLabel>Explicación del nivel de socialización *</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Explique cómo se socializa la estrategia en su unidad"
-                        className="min-h-[100px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {hasSocializedStrategy === "si" && (
+                <FormField
+                  control={form.control}
+                  name="socializationExplanation"
+                  render={({ field }) => (
+                    <FormItem className="md:col-span-2">
+                      <FormLabel>Explique brevemente cómo fue esa socialización *</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Describa cómo socializó la estrategia en su unidad académica"
+                          className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
             </div>
 
             <div className="flex justify-between">
